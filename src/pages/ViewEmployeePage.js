@@ -3,10 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
+import Modal from "react-bootstrap/Modal"; 
 import axios from 'axios';
 function ViewEmployeePage() {
   const [employees, setEmployees] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // State for selected employee
+  const [showModal, setShowModal] = useState(false); 
   useEffect(() => {
     async function fetchEmployees() {
       try {
@@ -29,9 +33,48 @@ function ViewEmployeePage() {
       }
     }
   };
+  const filterEmployees = () => {
+    const query = searchQuery.toLowerCase();
+    const filtered = employees.filter((employee) => {
+      // Customize this condition based on your search criteria
+      return (
+        employee.FirstName.toLowerCase().includes(query) ||
+        employee.LastName.toLowerCase().includes(query)
+      );
+    });
+    setFilteredEmployees(filtered);
+  };
+
+  useEffect(() => {
+    filterEmployees();
+  }, [searchQuery, employees]);
+
+  const openModal = (employee) => {
+    setSelectedEmployee(employee);
+    setShowModal(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setSelectedEmployee(null);
+    setShowModal(false);
+  };
   return (
     <div className="container py-5">
       <h1 className="heading  mb-5">Employee List</h1>
+      <div className="text-end">
+        <duv className="search-input">
+        <input
+        type="search"
+        className="form-control"
+        placeholder="Search by name"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+        </duv>
+     
+        <Link to='/add' className="btn add-btn">Add Employee</Link>
+      </div>
       <div className="table-responsive"></div>
       <table className="table border hover cust-table">
         <thead>
@@ -45,7 +88,7 @@ function ViewEmployeePage() {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {filteredEmployees.map((employee) => (
             <tr key={employee.id}>
               <td>
                 {employee.FirstName} {employee.LastName}
@@ -83,7 +126,7 @@ function ViewEmployeePage() {
                     </svg>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Link className="dropdown-item">
+                    <Link className="dropdown-item" onClick={() => openModal(employee)}>
                       <svg
                         fill="#7D7D7D"
                         viewBox="-3.5 0 32 32"
@@ -152,6 +195,29 @@ function ViewEmployeePage() {
           ))}
         </tbody>
       </table>
+      <Modal show={showModal} onHide={closeModal} className="employee-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>Employee Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedEmployee && (
+            <div>
+              <p><b>Name:</b>&nbsp;&nbsp;&nbsp; {`${selectedEmployee.FirstName} ${selectedEmployee.LastName}`}</p>
+              <p><b>DOB:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.DOB}</p>
+              <p><b>Study:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.Study}</p>
+              <p><b>Start Date:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.StartDate}</p>
+              <p><b>End Date:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.EndDate}</p>
+              <p><b>Current Salary:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.CurrentSalary}</p>
+              <p><b>Description:</b>&nbsp;&nbsp;&nbsp; {selectedEmployee.Description}</p>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary" onClick={closeModal}>
+            Close
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

@@ -1,49 +1,77 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 function EditEmployeePage() {
-      const { id } = useParams();
+    const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    FirstName: '',
-    LastName: '',
-    DOB: '',
-    Study: '',
-    StartDate: '',
-    EndDate: '',
-    CurrentSalary: '',
-    Description: '',
+    FirstName: "",
+    LastName: "",
+    DOB: "",
+    Study: "",
+    StartDate: "",
+    EndDate: "",
+    CurrentSalary: "",
+    Description: "",
   });
-
   useEffect(() => {
-    async function fetchEmployee() {
-      try {
-        const response = await axios.get(`https://sweede.app/DeliveryBoy/update-Employee/${id}`);
+    // Fetch the employee data by ID and populate the state
+    
+    axios.get(`https://sweede.app/DeliveryBoy/update-Employee/${id}`)
+      .then((response) => {
         setFormData(response.data);
-      } catch (error) {
-        console.error('Error fetching employees:', error);
-      }
-    }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
 
-    fetchEmployee();
-  }, [id])
+//   useEffect(() => {
+//     async function fetchEmployee() {
+//       try {
+//         const response = await axios.get(
+//           `https://sweede.app/DeliveryBoy/update-Employee/${id}`
+//         );
+//         setFormData(response.data);
+//       } catch (error) {
+//         console.error("Error fetching employees:", error);
+//       }
+//     }
+
+//     fetchEmployee();
+//   }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-        await axios.put(`https://sweede.app/DeliveryBoy/update-Employee/${id}`, formData);
-        console.log('updated successfully.');
-        navigate('/view');
-      } catch (error) {
-        console.error(`Error updating employee with ID ${id}:`, error);
-      }
+    axios.put(`https://sweede.app/DeliveryBoy/update-Employee/${id}`, formData)
+      .then((response) => {
+        console.log('Employee updated successfully:', response.data);
+        // Redirect or navigate back to the employee list page
+        navigate("/view"); // Update the route as needed
+      })
+      .catch((error) => {
+        console.error('Error updating employee:', error);
+      });
   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       await axios.put(
+//         `https://sweede.app/DeliveryBoy/update-Employee/${id}`,
+//         formData
+//       );
+//       console.log("updated successfully.");
+//       navigate("/view");
+//     } catch (error) {
+//       console.error(`Error updating employee with ID ${id}:`, error);
+//     }
+//   };
 
   return (
     <div className="container py-5">
@@ -90,16 +118,16 @@ function EditEmployeePage() {
               <div className="col-md-12 mb-5">
                 <label>Study</label>
                 <select
-                 id="Study"
-            name="Study"
-            value={formData.Study}
-            className="form-control"
-            onChange={handleInputChange}
-          >
-            <option value="">Select Study</option>
-            <option value="BCA">Computer Science</option>
-            <option value="BSC">Engineering</option>
-          </select>
+                  id="Study"
+                  name="Study"
+                  value={formData.Study}
+                  className="form-control"
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Study</option>
+                  <option value="BCA">Computer Science</option>
+                  <option value="BSC">Engineering</option>
+                </select>
               </div>
               <div className="col-md-6 mb-5">
                 <label>Start Date</label>
@@ -137,17 +165,23 @@ function EditEmployeePage() {
               </div>
               <div className="col-md-12 mb-5">
                 <label>Description</label>
-                <textarea className="form-control" id="Description" name="Description" placeholder="description"  value={formData.Description}
-                  onChange={handleInputChange}></textarea>
+                <textarea
+                  className="form-control"
+                  id="Description"
+                  name="Description"
+                  placeholder="Description"
+                  value={formData.Description}
+                  onChange={handleInputChange}
+                ></textarea>
               </div>
             </div>
             <div className=" d-flex align-item-center justify-content-center">
-            <button type="button" className="btn cancel-btn">
-              Cancel
-            </button>
-            <button type="submit" className="btn submit-btn">
-              Update Employee
-            </button>
+              <button type="button" className="btn cancel-btn">
+                Cancel
+              </button>
+              <button type="submit" className="btn submit-btn">
+                Update Employee
+              </button>
             </div>
           </form>
         </div>

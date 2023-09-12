@@ -90,4 +90,62 @@ table tbody tr td {
   margin: 10px;
   width: 45%
 }
+.btn.add-btn{
+  color: #fff;
+  font-size: 700;
+  background: #263857;
+  border-radius: 7px;
+  margin: 10px;
+  font-size: 13px;
+  padding: 10px 20px;
+}
+.btn.add-btn:hover{
+  opacity: 0.8;
+  background: #263857;
+  color: #fff;
+}
+.search-input{
+  display: inline-block;
+}
+.search-input .form-control{
+  height: 40px;
+  background-color: #152b50;
+  border: 1px solid #152b50;
+  border-radius: 7px;
+  font-size: 13px;
+  color: #ffffff;
+  padding: 0 20px;
+  font-weight: 400;
+  width: 250px;
+}
+.search-input .form-control:focus{
+  background-color: #1c3663;
+  border-color: #2c5aaf;
+  color: #ffffff;
+  box-shadow: none;
+}
+.search-input .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ffffff;
+  opacity: 1; /* Firefox */
+}
 
+.search-input .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #ffffff;
+}
+
+.search-input .form-control::-ms-input-placeholder { /* Microsoft Edge */
+  color: #ffffff;
+}
+.search-input .form-control::-webkit-search-cancel-button{
+  filter: invert(100%);
+  height: 20px;
+    width: 20px;
+    position:relative;
+    right:0; 
+}
+
+.employee-modal p{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
