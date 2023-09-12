@@ -1,38 +1,93 @@
-.App {
-  text-align: center;
+/* table */
+table {
+  border-collapse: collapse;
+  border-radius: 30px;
+  border-color: #dee2e6;
+  box-shadow: 0 0 0 1px #dee2e6; 
+  overflow: hidden;
+}
+table thead tr th {
+  padding: 30px !important; 
+  color: #263857 !important;
+  font-size: 20px;
+}
+table tbody tr td {
+  padding: 30px !important;
+  color: #7E98BA !important;
+  font-size: 13px;
+}
+.table-dropdown .btn-primary{
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 0;
+}
+.table-dropdown .show.btn-primary, .table-dropdown .btn-primary:hover{
+  background-color: #f2f2f2;
+  border: 0;
+}
+.table-dropdown .btn-primary svg{
+  width: 25px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.table-dropdown .dropdown-toggle::after {
+  display: none;
+}
+.table-dropdown .dropdown-menu svg{
+  width: 20px;
+}
+.table-dropdown .dropdown-menu .anchor{
+  color: #212529;
+  text-decoration: none;
+}
+.table-dropdown .dropdown-item{
+  color: #7D7D7D;
+}
+.heading{
+  font-weight: 700;
+}
+.card.custom-card{
+  box-shadow: 0px 4px 19px 0px #D2D1D140;
+  border: 0;
+  border-radius: 35px;
+}
+.card.custom-card label{
+  font-size: 13px;
+  font-weight: 600;
+  color: #263857;
+  margin-bottom: 10px;
+}
+.card.custom-card input, .card.custom-card select{
+  height: 54px;
+  background-color: #F8FBFF;
+  border: 0;
+  border-radius: 16px;
+  font-size: 13px;
+}
+.card.custom-card textarea{
+  background-color: #F8FBFF;
+  border: 0;
+  border-radius: 16px;
+  font-size: 13px;
+}
+.card.custom-card .btn.cancel-btn{
+  font-size: 18px;
+  color: #263857;
+  font-size: 700;
+  background: #E3E3E3;
+  border-radius: 13px;
+  margin: 10px;
+  width: 45%
+}
+.card.custom-card .btn.submit-btn{
+  font-size: 18px;
+  color: #fff;
+  font-size: 700;
+  background: #263857;
+  border-radius: 13px;
+  margin: 10px;
+  width: 45%
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
